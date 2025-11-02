@@ -2,7 +2,7 @@ import type { ProductItem} from "@/utils/types/type"
 import {  SearchFilterWrapper } from "@/components/search-filter-wrapper"
 import { decryptData } from "@/lib/encryption";
 import { PASSWORD } from "@/lib/contants";
-
+export const dynamic = "force-dynamic";
 async function decryptAllProducts(encryptedProducts:ProductItem[]) {
   const decryptedProducts = encryptedProducts.map(prod => {
     const decryptedDetails = decryptData(PASSWORD,prod.details);
@@ -16,7 +16,7 @@ async function decryptAllProducts(encryptedProducts:ProductItem[]) {
 
 async function getProductData(): Promise<ProductItem[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const response = await fetch(`${baseUrl}/api/products`, {
       cache: "no-store",
     })
