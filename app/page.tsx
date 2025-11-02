@@ -16,7 +16,7 @@ async function decryptAllProducts(encryptedProducts:ProductItem[]) {
 
 async function getProductData(): Promise<ProductItem[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
     const response = await fetch(`${baseUrl}/api/products`, {
       cache: "no-store",
     })
