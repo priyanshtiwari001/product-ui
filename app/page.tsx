@@ -1,7 +1,11 @@
 import type { ProductItem} from "@/utils/types/type"
 import {  SearchFilterWrapper } from "@/components/search-filter-wrapper"
 import { decryptData } from "@/lib/encryption";
-import { PASSWORD } from "@/lib/contants";
+import { PASSWORD, SHORTCUTS } from "@/lib/contants";
+import { ShortcutCard } from "@/components/shortcut-card";
+import ShortcutHeader from "@/components/short-header";
+import DashboardHeader from "@/components/header";
+import ShortcutGrid from "@/components/shortcut-grid";
 export const dynamic = "force-dynamic";
 async function decryptAllProducts(encryptedProducts:ProductItem[]) {
   const decryptedProducts = encryptedProducts.map(prod => {
@@ -33,29 +37,36 @@ async function getProductData(): Promise<ProductItem[]> {
   }
 }
 
-export default async function Home() {
-  const products = await getProductData()
-
+export default  async function Home() {
+   const products = await getProductData()
   return (
-    <main className="min-h-screen bg-backgound">
-      <div className="bg-card border-b border-border py-8 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-card-foreground mb-2">B2B Product Catalog</h1>
-          <p className="text-muted-foreground">
-            Enterprise solutions with secure encrypted delivery and server-side decryption
-          </p>
+    <main className="min-h-screen bg-background">
+      <div className="relative overflow-hidden border-b border-border/40 bg-linear-to-br from-card via-card to-background/60">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/8 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 -left-40 w-80 h-80 bg-primary/4 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-20">
+        <DashboardHeader/>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        {products.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">No products found</p>
-          </div>
-        ) : (
-          <SearchFilterWrapper items={products} />
-        )}
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        <ShortcutHeader/>
+        <ShortcutGrid/>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 pb-16">
+        <SearchFilterWrapper items={products} />
+      </div>
+
+      <div className="border-t border-border/40 bg-card/30 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 py-12 text-center text-sm text-muted-foreground">
+          <p className="font-medium">Trusted by leading enterprises worldwide</p>
+        </div>
       </div>
     </main>
   )
 }
+
